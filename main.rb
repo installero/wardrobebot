@@ -25,7 +25,7 @@ Telegram::Bot::Client.run(telegram_bot_api_key) do |bot|
     when '/stop'
       bot.api.send_message(chat_id: message.chat.id, text: "Пока, #{message.from.first_name}!")
     else
-      temperature = open_weather_current_temperature
+      temperature = open_weather_current_temperature(api_key, city)
 
       temperature_text = "По данным openweathermap.org в Москве сейчас #{temperature}°C"
 
