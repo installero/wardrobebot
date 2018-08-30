@@ -2,18 +2,20 @@ require "json"
 require "net/http"
 require "byebug"
 require "telegram/bot"
+require "dotenv"
 
 require_relative "lib/clothes_item"
 require_relative "lib/wardrobe"
 require_relative "lib/open_weather_map"
 
+Dotenv.load
+
 # Конфигурация
 
-api_key = "e809fbd81e2a508842b45ad0a5c8bbc9"
-spreadsheet_key = "1bPT458nCSWahOXu6FcRmv3ASWC1Yl0UuyiTlTRCBUAI"
-city = "Moscow"
-telegram_bot_api_key =
-  "650565763:AAHX_0_8l3TFgfRr1UnoOOFTKOPlVEb3ekE"
+api_key = ENV["OPENWEATHER_API_KEY"]
+spreadsheet_key = ENV["SPREADSHEET_KEY"]
+city = ENV["CITY"]
+telegram_bot_api_key = ENV["TELEGRAM_BOT_API_KEY"]
 
 # Основная программа
 
