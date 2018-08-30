@@ -1,6 +1,7 @@
 require "json"
 require "net/http"
 require "byebug"
+require "telegram/bot"
 
 require_relative "lib/clothes_item"
 require_relative "lib/wardrobe"
@@ -16,14 +17,27 @@ telegram_bot_api_key =
 
 # Основная программа
 
-temperature = open_weather_current_temperature
+Telegram::Bot::Client.run(token) do |bot|
+  bot.listen do |message|
+    case message.text
+    when '/start'
+      bot.api.send_message(chat_id: message.chat.id, text: "Привет, #{message.from.first_name}!")
+    when '/stop'
+      bot.api.send_message(chat_id: message.chat.id, text: "Пока, #{message.from.first_name}!")
+    else
+      temperature = open_weather_current_temperature
 
-puts "По данным openweathermap.org в Москве сейчас #{temperature}°C"
+      temperature_text = "По данным openweathermap.org в Москве сейчас #{temperature}°C"
 
-wardrobe = Wardrobe.new(spreadsheet_key)
+      wardrobe = Wardrobe.new(spreadsheet_key)
 
-items = wardrobe.random_suitable_items(temperature)
+      items = wardrobe.random_suitable_items(temperature)
 
-items.each do |item|
-  puts item.info
+      items_text = "Предлагая сегодня надеть:\n\n"
+      items_text += items.map { |item| "#{item.info}\n" }
+
+      bot.api.send_message(chat_id: message.chat.id, text: temperature_text)
+      bot.api.send_message(chat_id: message.chat.id, text: items_text)
+    end
+  end
 end
