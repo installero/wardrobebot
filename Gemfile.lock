@@ -5,6 +5,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    byebug (10.0.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     descendants_tracker (0.0.4)
@@ -27,9 +28,11 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
 
 PLATFORMS
+  ruby
   x64-mingw32
 
 DEPENDENCIES
+  byebug
   telegram-bot-ruby
 
 BUNDLED WITH
